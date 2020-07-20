@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table,th,tr,td{
+            border:1px solid red;
+        }
+    </style>
+</head>
+<body>
+   <h1>post list</h1> 
+   <table>
+    <thead>
+        <th>title</th>
+        <th>content</th>
+        <th>author name</th>
+        <th>author email</th>
+    </thead>
+
+<tbody>
+    <% for(var i=0; i<posts.length; i++){ %>
+    <tr>
+        <td> <a href="/posts/detail/<%=posts[i]._id %>"><%=posts[i].title %></a></td>
+        <td> <%= posts[i].content %> </td>
+        <td> <%=posts[i].author.name%> </td>
+        <td> <%=posts[i].author.email%> </td>
+    </tr>
+   <%}%>
+</tbody>
+</table>
+</body>
+</html>

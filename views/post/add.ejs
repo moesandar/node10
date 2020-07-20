@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>add</h1>
+    <form action="/posts/add" method="post">
+title:<input type="text" name="title"><p></p>
+content:<input type="text" name="content"><p></p>
+author: <select name="author" id="author">
+    <% for(var i=0;i<users.length;i++){ %>
+        <option value="<%=users[i]._id%>"><%=users[i].name%></option>
+   <% } %>
+</select>
+<input type="submit" value="add">
+
+    </form>
+</body>
+</html>

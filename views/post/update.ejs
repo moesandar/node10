@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>update</title>
+</head>
+<body>
+
+    <h1>update</h1>
+    <form action="/posts/update" method="post">
+        <input type="hidden" name="id" value="<%=post._id %>" >
+title:<input type="text" name="title" value="<%=post.title %>"><p></p>
+content:<input type="text" name="content" value="<%=post.content %>"><p></p>
+
+author: <select name="author" id="author">
+    <% for(var i=0;i<users.length;i++){ %>
+        <option value="<%=users[i]._id%>"
+        <%=users[i]._id.equals(post.author)? "selected": ""%>>
+        <%=users[i].name%>
+        </option>
+   <% } %>
+
+</select>
+<input type="submit" value="update">
+
+    </form>
+</body>
+</html>
