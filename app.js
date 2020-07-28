@@ -7,6 +7,9 @@ var session=require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postsRouter=require('./routes/posts');
+var apiUserRouter=require('./api/routes/users');
+var apiAdminRouter=require('./api/routes/admin');
+var apiPostRouter=require('./api/routes/posts');
 var mongoose=require("mongoose");
 
 
@@ -31,11 +34,13 @@ app.use(
 
 })
 );
-mongoose.connect("mongodb://127.0.0.1/node10db");
+mongoose.connect("mongodb+srv://moesandar:moesandar@cluster0.qbjl7.mongodb.net/node10db?retryWrites=true&w=majority");
 var db=mongoose.connection;
 db.on("error",console.error.bind(console,"mongodb connection err"));
 app.use('/', indexRouter);
-
+app.use('/api/users',apiUserRouter);
+app.use('/api/',apiAdminRouter);
+app.use('/api/posts',apiPostRouter);
 app.use(function(req,res,next){
   if(req.session.user){
     next();

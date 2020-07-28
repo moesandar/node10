@@ -12,7 +12,8 @@
         <input type="hidden" name="id" value="<%=post._id %>" >
 title:<input type="text" name="title" value="<%=post.title %>"><p></p>
 content:<input type="text" name="content" value="<%=post.content %>"><p></p>
-
+<label for="img">Img</label>
+<input type="file" name="photo" id="img"><p></p>
 author: <select name="author" id="author">
     <% for(var i=0;i<users.length;i++){ %>
         <option value="<%=users[i]._id%>"
