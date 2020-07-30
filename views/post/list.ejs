@@ -97,11 +97,11 @@
 										<table id="add-row" class="display table table-striped table-hover" >
 											<thead>
 												<tr>
-                                                    <th>title</th>
-                                                    <th>content</th>
-                                                    <th> profile</th>
-                                                    <th>author name</th>
-                                                    <th>author email</th>
+												    <th>title</th>
+        <th>content</th>
+        <th> profile</th>
+        <th>author name</th>
+        <th>author email</th>
 													
 													<th style="width: 10%">Action</th>
 												</tr>
@@ -110,16 +110,26 @@
 											<tbody>
 												<% for(var i=0; i<posts.length; i++){ %>
 												<tr>
-                                                    <td> <a href="/posts/detail/<%=posts[i]._id %>"><%=posts[i].title %></a></td>
+													<td><a href="/posts/detail/<%=posts[i]._id%>"><%=posts[i].title %></a></td>
 
-													<td> <%= posts[i].content %> </td>
-        <td>
-           <img src="<%=posts[i].imgUrl%>" alt="" height="100" width="100" > 
-        </td>
-        <td> <%=posts[i].author.name%> </td>
-        <td> <%=posts[i].author.email%> </td>
-    </tr>
-												
+                                                    <td> <%=posts[i].content %> </td>
+                                                    
+                                                    <td>
+                                                        <img src="<%=posts[i].imgUrl%>" alt="" height="100" width="100" > 
+                                                     </td>
+                                                     <td> <%=posts[i].author.name%> </td>
+                                                     <td> <%=posts[i].author.email%> </td>
+													<td>
+														<div class="form-button-action">
+															<a role="button" href="/posts/update/<%= posts[i]._id %>" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
+																<i class="fa fa-edit"></i>
+															</a>
+															<a role="button" onclick="del('<%= posts[i]._id %>');" title="" class="btn btn-link btn-danger" data-original-title="Remove">
+																<i class="fa fa-times"></i>
+															</a>
+														</div>
+													</td>
+												</tr>
                                            <% } %>
 												
 											</tbody>
@@ -131,12 +141,75 @@
 	<!--   Core JS Files   -->
 	<% include ../partial/script %>
 </body>
+<script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+<script>
+    function del(id){
+        var con=confirm("are you sure to delete");
+        if(con){
+            location.href="/posts/delete/"+id;
+        }
+        
+    }
+</script>
+<script >
+	$(document).ready(function() {
+		$('#basic-datatables').DataTable({
+		});
 
+		$('#multi-filter-select').DataTable( {
+			"pageLength": 5,
+			initComplete: function () {
+				this.api().columns().every( function () {
+					var column = this;
+					var select = $('<select class="form-control"><option value=""></option></select>')
+					.appendTo( $(column.footer()).empty() )
+					.on( 'change', function () {
+						var val = $.fn.dataTable.util.escapeRegex(
+							$(this).val()
+							);
+
+						column
+						.search( val ? '^'+val+'$' : '', true, false )
+						.draw();
+					} );
+
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			}
+		});
+
+		// Add Row
+		$('#add-row').DataTable({
+			"pageLength": 5,
+		});
+
+		var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+		$('#addRowButton').click(function() {
+			$('#add-row').dataTable().fnAddData([
+				$("#addName").val(),
+				$("#addPosition").val(),
+				$("#addOffice").val(),
+				action
+				]);
+			$('#addRowModal').modal('hide');
+
+		});
+	});
+</script>
 
 </html>
 
-<!-- 
-<html lang="en">
+
+
+
+
+
+
+
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -174,4 +247,4 @@
 </tbody>
 </table>
 </body>
-</html>
+</html>  -->

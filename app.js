@@ -34,7 +34,7 @@ app.use(
 
 })
 );
-mongoose.connect("mongodb+srv://moesandar:moesandar@cluster0.qbjl7.mongodb.net/node10db?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://moesandar:moesandar@cluster0.cfl6m.mongodb.net/node10db?retryWrites=true&w=majority");
 var db=mongoose.connection;
 db.on("error",console.error.bind(console,"mongodb connection err"));
 app.use('/', indexRouter);
